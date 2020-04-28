@@ -16,10 +16,10 @@ app.get('/apps', (req, res) => {
   const { search = '', sort } = req.query;
 
   if (sort) {
-    if (!['app', 'rating', 'genre'].includes(sort)) {
+    if (!['App', 'Rating', 'Genres'].includes(sort)) {
       return res
         .status(400)
-        .send('Sort must be one of app, rating or genre');
+        .send('Sort must be one of App, Rating or Genres');
     }
   }
 
@@ -36,10 +36,13 @@ app.get('/apps', (req, res) => {
         return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
       });
   }
-  const { filterGenre } = req.query; if (filterGenre) {
+
+  const { filter} = req.query;
+
+  if (filter) {
     results
       .filter((c) => {
-        return c[filterGenre];
+        return c[filter];
       });
   }
 
