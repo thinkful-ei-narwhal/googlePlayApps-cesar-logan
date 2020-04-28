@@ -37,19 +37,19 @@ app.get('/apps', (req, res) => {
       });
   }
 
-  const { filter} = req.query;
+  const { genres} = req.query;
 
-  if (filter) {
-    if (!['Action', 'Puzzle','Strategy', 'Casual','Card', 'Arcade'].includes(filter)) {
+  if (genres) {
+    if (!['Action', 'Puzzle','Strategy', 'Casual','Card', 'Arcade'].includes(genres)) {
       return res
         .status(400)
         .send('Filter must be one of Action, Puzzle, Strategy, Casual, Card, Arcade');
     }
   }
 
-  if (filter) {
+  if (genres) {
     results.filter((c) => {
-      return c[filter];
+      return c[genres];
     });
   }
 
