@@ -48,9 +48,12 @@ app.get('/apps', (req, res) => {
   }
 
   if (genres) {
-    results.filter((c) => {
-      return c[genres];
-    });
+    results = results
+      .filter(result =>
+        result
+          .Genres
+          .toLowerCase()
+          .includes(genres.toLowerCase()));
   }
 
   res.json(results);
