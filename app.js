@@ -10,16 +10,16 @@ const app = express();
 
 app.use(morgan('common'));
 
-const apps= require('./playstore.js');
+const apps = require('./playstore.js');
 
 app.get('/apps', (req, res) => {
-  const {search= '', sort } = req.query;
+  const { search = '', sort } = req.query;
 
   if (sort) {
-    if (!['app', 'rating'].includes(sort)) {
+    if (!['app', 'rating', 'genre'].includes(sort)) {
       return res
         .status(400)
-        .send('Sort must be one of app or rating');
+        .send('Sort must be one of app, rating or genre');
     }
   }
 
@@ -34,6 +34,12 @@ app.get('/apps', (req, res) => {
     results
       .sort((a, b) => {
         return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
+      });
+  }
+  const { filterGenre } = req.query; if (filterGenre) {
+    results
+      .filter((c) => {
+        return c[filterGenre];
       });
   }
 
