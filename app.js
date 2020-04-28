@@ -16,10 +16,10 @@ app.get('/apps', (req, res) => {
   const { search = '', sort } = req.query;
 
   if (sort) {
-    if (!['App', 'Rating', 'Genres'].includes(sort)) {
+    if (!['App', 'Rating'].includes(sort)) {
       return res
         .status(400)
-        .send('Sort must be one of App, Rating or Genres');
+        .send('Sort must be one of App, Rating');
     }
   }
 
@@ -40,10 +40,17 @@ app.get('/apps', (req, res) => {
   const { filter} = req.query;
 
   if (filter) {
-    results
-      .filter((c) => {
-        return c[filter];
-      });
+    if (!['Action', 'Puzzle','Strategy', 'Casual','Card', 'Arcade'].includes(filter)) {
+      return res
+        .status(400)
+        .send('Filter must be one of Action, Puzzle, Strategy, Casual, Card, Arcade');
+    }
+  }
+
+  if (filter) {
+    results.filter((c) => {
+      return c[filter];
+    });
   }
 
   res.json(results);
